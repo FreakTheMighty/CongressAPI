@@ -160,7 +160,7 @@ module['exports'] = function convert(hook) {
 
           request.post({
             url: 'https://hook.io/datastore/set?hook_private_key=59d58a11-8180-4deb-bb1b-a8850ac1dc02',
-            formData: {CACHE_KEY: data}
+            formData: {CACHE_KEY: JSON.stringify(data)}
           }, function (err, httpResponse, body) {
             if (!err) {
               hook.res.json(body);
