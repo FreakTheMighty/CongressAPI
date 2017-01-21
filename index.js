@@ -147,6 +147,7 @@ module['exports'] = function convert(hook) {
     var duration;
 
     if (cachedContacts) {
+      cachedContacts = JSON.parse(cachedContacts);
       var cachedOn = moment(cachedContacts.cachedOn);
       duration = moment.duration(cachedOn.diff(moment()));
     }
@@ -156,7 +157,7 @@ module['exports'] = function convert(hook) {
     } else {
       fetch(function (err, data) {
         if (!err) {
-          store.set(CACHE_KEY, data, function (err) {
+          store.set(CACHE_KEY, JSON.stringify(data), function (err) {
             hook.res.json(data);
           });
         }
