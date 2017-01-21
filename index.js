@@ -152,7 +152,6 @@ module['exports'] = function convert(hook) {
     }
 
     hook.res.json({
-      duration: duration.asHours(),
       cachedOn: cachedContacts.cachedOn
     });
 
