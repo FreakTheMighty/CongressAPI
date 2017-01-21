@@ -163,7 +163,7 @@ module['exports'] = function convert(hook) {
             formData: {key: CACHE_KEY, value: JSON.stringify(data)}
           }, function (err, httpResponse, body) {
             if (!err) {
-              hook.res.json(body);
+              hook.res.json(data);
             } else {
               hook.res.status(500).json(err);
             }
