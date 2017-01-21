@@ -62,7 +62,7 @@ module['exports'] = function convert(hook) {
     WY: 'Wyoming'
   };
 
-  var CACHE_KEY = 'contacts/3';
+  var CACHE_KEY = 'contacts/4';
 
   var SENATE_API = 'http://www.senate.gov/general/contact_information/senators_cfm.xml';
 
@@ -157,13 +157,15 @@ module['exports'] = function convert(hook) {
     } else {
       fetch(function (err, data) {
         if (!err) {
-          store.set(CACHE_KEY, data, function (err, results) {
-            if (!err) {
-              hook.res.json(results);
-            } else {
-              hook.res.status(500).json(err);
-            }
-          });
+
+          request.post('https://hook.io/datastore/set?hook_private_key=59d58a11-8180-4deb-bb1b-a8850ac1dc02',
+            {CACHE_KEY: data}, function (err, httpResponse, body) {
+              if (!err) {
+                hook.res.json(body);
+              } else {
+                hook.res.status(500).json(err);
+              }
+            });
         }
       });
     }
