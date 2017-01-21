@@ -62,7 +62,7 @@ module['exports'] = function convert(hook) {
     WY: 'Wyoming'
   };
 
-  var CACHE_KEY = 'contacts/2';
+  var CACHE_KEY = 'contacts/3';
 
   var SENATE_API = 'http://www.senate.gov/general/contact_information/senators_cfm.xml';
 
@@ -157,7 +157,7 @@ module['exports'] = function convert(hook) {
     } else {
       fetch(function (err, data) {
         if (!err) {
-          store.set(CACHE_KEY, 'simple', function (err, results) {
+          store.set(CACHE_KEY, data, function (err, results) {
             if (!err) {
               hook.res.json(results);
             } else {
