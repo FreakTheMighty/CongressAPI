@@ -1,22 +1,29 @@
-var express = require('express');
-var app = express();
-var request = require('request');
-//var parser = require('xml2json');
+module['exports'] = function convert(hook) {
 
-var CONGRESS_XML = 'http://www.senate.gov/general/contact_information/senators_cfm.xml';
+  var moment = require('moment');
+  var aggregate = require('./aggregate');
 
-app.get('/', function (req, res) {
+  var CACHE_KEY = 'contacts';
 
-  request(CONGRESS_XML, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      //var json = parser.toJson(body);
-      res.setHeader('Content-Type', 'application/xml');
-      res.send(body);
+  client.get(CACHE_KEY, function (err, cachedContacts) {
+
+    var duration;
+
+    if (cachedContacts) {
+      var cachedOn = moment(cachedContacts.cachedOn);
+      duration = moment.duration(cachedOn.diff(moment()));
+    }
+
+    if (duration && duration.asHours() < 1) {
+      hook.res.json(cachedContacts);
+    } else {
+      aggregate(function (err, data) {
+        if (!err) {
+          client.set(CACHE_KEY, data, function (err) {
+            hook.res.json(data);
+          });
+        }
+      });
     }
   });
-});
-
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
-});
-
+};
