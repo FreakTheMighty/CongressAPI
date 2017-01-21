@@ -63,9 +63,24 @@ module['exports'] = function convert(hook) {
   };
 
   var SENATE_API = 'http://www.senate.gov/general/contact_information/senators_cfm.xml';
+
   var HOUSE_API = 'http://clerk.house.gov/xml/lists/MemberData.xml';
 
   var moment = require('moment');
+
+
+  var _ = require('lodash');
+
+  var request = require('request');
+
+  var moment = require('moment');
+
+  var parseString = require('xml2js').parseString;
+
+  var stateHash = require('./state_hash');
+
+  var store = hook.datastore;
+
 
   var CACHE_KEY = 'contacts';
 
@@ -129,7 +144,7 @@ module['exports'] = function convert(hook) {
 
   }
 
-  client.get(CACHE_KEY, function (err, cachedContacts) {
+  store.get(CACHE_KEY, function (err, cachedContacts) {
 
     var duration;
 
@@ -143,7 +158,7 @@ module['exports'] = function convert(hook) {
     } else {
       fetch(function (err, data) {
         if (!err) {
-          client.set(CACHE_KEY, data, function (err) {
+          store.set(CACHE_KEY, data, function (err) {
             hook.res.json(data);
           });
         }
