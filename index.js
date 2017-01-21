@@ -158,7 +158,11 @@ module['exports'] = function convert(hook) {
       fetch(function (err, data) {
         if (!err) {
           store.set(CACHE_KEY, 'simple', function (err, results) {
-            hook.res.json(results);
+            if (!err) {
+              hook.res.json(results);
+            } else {
+              hook.res.status(500).json(err);
+            }
           });
         }
       });
