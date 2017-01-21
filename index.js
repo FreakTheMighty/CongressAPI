@@ -151,16 +151,21 @@ module['exports'] = function convert(hook) {
       duration = moment.duration(cachedOn.diff(moment()));
     }
 
-    if (duration && duration.asHours() < 1) {
-      hook.res.json(cachedContacts);
-    } else {
-      fetch(function (err, data) {
-        if (!err) {
-          store.set(CACHE_KEY, data, function (err) {
-            hook.res.json(data);
-          });
-        }
-      });
-    }
+    hook.res.json({
+      duration: duration.asHours(),
+      cachedOn: cachedContacts.cachedOn
+    });
+
+    //if (duration && duration.asHours() < 1) {
+    //  hook.res.json(cachedContacts);
+    //} else {
+    //  fetch(function (err, data) {
+    //    if (!err) {
+    //      store.set(CACHE_KEY, data, function (err) {
+    //        hook.res.json(data);
+    //      });
+    //    }
+    //  });
+    //}
   });
 };
