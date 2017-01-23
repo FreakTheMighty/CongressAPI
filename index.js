@@ -105,6 +105,7 @@ module['exports'] = function convert(hook) {
         member.congress = 'senate';
         member.state_fullname = stateHash[member.state];
         member.member_full = [member.first_name, member.last_name].join(' ');
+        member.photo = 'https://www.congress.gov/img/member/{}.jpg'.replace('{}', member.bioguide_id);
         return member
       });
   };
