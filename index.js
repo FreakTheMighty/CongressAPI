@@ -95,6 +95,7 @@ module['exports'] = function convert(hook) {
         normalMember.state_fullname = member.state['state-fullname'];
         normalMember.bioguide_id = member.bioguideID;
         normalMember.phone = member.phone;
+        normalMember.photo = 'https://www.congress.gov/img/member/114_rp_ca_31_aguilar_pete_200.jpg';
         return normalMember;
       }).value();
   };
@@ -105,7 +106,7 @@ module['exports'] = function convert(hook) {
         member.congress = 'senate';
         member.state_fullname = stateHash[member.state];
         member.member_full = [member.first_name, member.last_name].join(' ');
-        member.photo = 'https://www.congress.gov/img/member/{}_200.jpg'.replace('{}', member.bioguide_id.toLowerCase());
+        member.photo = `https://www.congress.gov/img/member/${member.bioguide_id.toLowerCase()}_200.jpg`;
         return member
       });
   };
