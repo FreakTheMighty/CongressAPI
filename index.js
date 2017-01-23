@@ -62,7 +62,7 @@ module['exports'] = function convert(hook) {
     WY: 'Wyoming'
   };
 
-  var CACHE_KEY = 'contacts/5';
+  var CACHE_KEY = 'contacts/6';
 
   var SENATE_API = 'http://www.senate.gov/general/contact_information/senators_cfm.xml';
 
@@ -105,7 +105,7 @@ module['exports'] = function convert(hook) {
         member.congress = 'senate';
         member.state_fullname = stateHash[member.state];
         member.member_full = [member.first_name, member.last_name].join(' ');
-        member.photo = 'https://www.congress.gov/img/member/{}.jpg'.replace('{}', member.bioguide_id);
+        member.photo = 'https://www.congress.gov/img/member/{}.jpg'.replace('{}', member.bioguide_id.toLowerCase());
         return member
       });
   };
